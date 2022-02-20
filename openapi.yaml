@@ -1,0 +1,2814 @@
+components:
+  schemas:
+    ExternalPathCreate:
+      properties:
+        external_name:
+          title: External Name
+          type: string
+        path:
+          title: Path
+          type: string
+      required:
+      - external_name
+      - path
+      title: ExternalPathCreate
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    PITRestoreCreate:
+      properties:
+        for_stage_site:
+          default: false
+          title: For Stage Site
+          type: boolean
+        restore_point:
+          format: date-time
+          title: Restore Point
+          type: string
+      required:
+      - restore_point
+      title: PITRestoreCreate
+      type: object
+    Plan:
+      properties:
+        additional_sites:
+          default: 0
+          title: Additional Sites
+          type: integer
+        created:
+          format: date-time
+          title: Created
+          type: string
+        currency:
+          title: Currency
+          type: string
+        ends:
+          format: date-time
+          title: Ends
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        interval:
+          title: Interval
+          type: string
+        plan_type_name:
+          title: Plan Type Name
+          type: string
+        team:
+          $ref: '#/components/schemas/Team'
+        team_id:
+          format: uuid4
+          title: Team Id
+          type: string
+        user_id:
+          format: uuid4
+          title: User Id
+          type: string
+      required:
+      - plan_type_name
+      - id
+      - user_id
+      - created
+      - ends
+      title: Plan
+      type: object
+    PlanCreate:
+      properties:
+        additional_sites:
+          default: 0
+          title: Additional Sites
+          type: integer
+        interval:
+          title: Interval
+          type: string
+        new_team_name:
+          default: Personal
+          title: New Team Name
+          type: string
+        plan_type_name:
+          title: Plan Type Name
+          type: string
+      required:
+      - plan_type_name
+      - interval
+      title: PlanCreate
+      type: object
+    PlanUpdate:
+      properties:
+        additional_sites:
+          title: Additional Sites
+          type: integer
+        plan_type_name:
+          title: Plan Type Name
+          type: string
+      required:
+      - additional_sites
+      - plan_type_name
+      title: PlanUpdate
+      type: object
+    Proration:
+      properties:
+        proration_amount:
+          title: Proration Amount
+          type: integer
+      required:
+      - proration_amount
+      title: Proration
+      type: object
+    Region:
+      properties:
+        city:
+          title: City
+          type: string
+        cname:
+          title: Cname
+          type: string
+        country:
+          title: Country
+          type: string
+        country_code:
+          title: Country Code
+          type: string
+        created:
+          format: date-time
+          title: Created
+          type: string
+        id:
+          title: Id
+          type: integer
+        ip:
+          title: Ip
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+      - id
+      - cname
+      - created
+      title: Region
+      type: object
+    SiteLiveCreate:
+      properties:
+        fqdn:
+          title: Fqdn
+          type: string
+        git_url:
+          title: Git Url
+          type: string
+        region_id:
+          default: 1
+          title: Region Id
+          type: integer
+        team_id:
+          format: uuid4
+          title: Team Id
+          type: string
+        template_name:
+          title: Template Name
+          type: string
+        wordpressBlogName:
+          title: Wordpressblogname
+          type: string
+        wordpressEmail:
+          title: Wordpressemail
+          type: string
+        wordpressFirstName:
+          title: Wordpressfirstname
+          type: string
+        wordpressLastName:
+          title: Wordpresslastname
+          type: string
+        wordpressPassword:
+          title: Wordpresspassword
+          type: string
+        wordpressUsername:
+          title: Wordpressusername
+          type: string
+      required:
+      - fqdn
+      - team_id
+      - wordpressBlogName
+      - wordpressFirstName
+      - wordpressLastName
+      - wordpressEmail
+      - wordpressUsername
+      - wordpressPassword
+      title: SiteLiveCreate
+      type: object
+    SiteLiveUpdate:
+      properties:
+        fqdn:
+          title: Fqdn
+          type: string
+      required:
+      - fqdn
+      title: SiteLiveUpdate
+      type: object
+    SiteStageCreate:
+      properties:
+        git_branch:
+          title: Git Branch
+          type: string
+        restore_point:
+          format: date-time
+          title: Restore Point
+          type: string
+        subdomain:
+          title: Subdomain
+          type: string
+      required:
+      - subdomain
+      title: SiteStageCreate
+      type: object
+    Tag:
+      properties:
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+      - name
+      - id
+      title: Tag
+      type: object
+    TagCreate:
+      properties:
+        name:
+          title: Name
+          type: string
+      required:
+      - name
+      title: TagCreate
+      type: object
+    Team:
+      properties:
+        created:
+          format: date-time
+          title: Created
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        plan_id:
+          format: uuid4
+          title: Plan Id
+          type: string
+      required:
+      - name
+      - id
+      - plan_id
+      - created
+      title: Team
+      type: object
+    TeamMember:
+      properties:
+        id:
+          format: uuid4
+          title: Id
+          type: string
+      required:
+      - id
+      title: TeamMember
+      type: object
+    TeamMemberInvite:
+      properties: {}
+      title: TeamMemberInvite
+      type: object
+    TeamMemberInviteCreate:
+      properties:
+        emails:
+          title: Emails
+          type: string
+      required:
+      - emails
+      title: TeamMemberInviteCreate
+      type: object
+    Template:
+      properties:
+        approved:
+          title: Approved
+          type: string
+        created:
+          title: Created
+          type: string
+        full_description:
+          title: Full Description
+          type: string
+        name:
+          title: Name
+          type: string
+        plugins:
+          title: Plugins
+          type: string
+        quickstart:
+          title: Quickstart
+          type: string
+        short_description:
+          title: Short Description
+          type: string
+        tag:
+          title: Tag
+          type: string
+        wpress_url:
+          title: Wpress Url
+          type: string
+      required:
+      - name
+      - short_description
+      - full_description
+      - plugins
+      - quickstart
+      - tag
+      - approved
+      - wpress_url
+      - created
+      title: Template
+      type: object
+    TemplateCreate:
+      properties:
+        full_description:
+          title: Full Description
+          type: string
+        name:
+          title: Name
+          type: string
+        plugins:
+          title: Plugins
+          type: string
+        quickstart:
+          title: Quickstart
+          type: string
+        short_description:
+          title: Short Description
+          type: string
+        tag:
+          title: Tag
+          type: string
+        wpress_url:
+          title: Wpress Url
+          type: string
+      required:
+      - name
+      - short_description
+      - full_description
+      - plugins
+      - quickstart
+      - wpress_url
+      - tag
+      title: TemplateCreate
+      type: object
+    Ticket:
+      properties:
+        category:
+          title: Category
+          type: string
+        created:
+          format: date-time
+          title: Created
+          type: string
+        description:
+          title: Description
+          type: string
+        id:
+          title: Id
+          type: integer
+        resolved:
+          title: Resolved
+          type: boolean
+        subject:
+          title: Subject
+          type: string
+      required:
+      - subject
+      - id
+      - resolved
+      - created
+      title: Ticket
+      type: object
+    TicketCreate:
+      properties:
+        category:
+          title: Category
+          type: string
+        description:
+          title: Description
+          type: string
+        resolved:
+          default: false
+          title: Resolved
+          type: boolean
+        s3_object:
+          title: S3 Object
+          type: string
+        site_live_id:
+          format: uuid4
+          title: Site Live Id
+          type: string
+        subject:
+          title: Subject
+          type: string
+      required:
+      - subject
+      title: TicketCreate
+      type: object
+    TicketReply:
+      properties:
+        created:
+          format: date-time
+          title: Created
+          type: string
+        description:
+          title: Description
+          type: string
+        resolve:
+          title: Resolve
+          type: boolean
+      required:
+      - created
+      title: TicketReply
+      type: object
+    TicketReplyCreate:
+      properties:
+        description:
+          title: Description
+          type: string
+        resolve:
+          title: Resolve
+          type: boolean
+      title: TicketReplyCreate
+      type: object
+    TicketUpdate:
+      properties:
+        subject:
+          title: Subject
+          type: string
+      required:
+      - subject
+      title: TicketUpdate
+      type: object
+    UserEmailCreate:
+      properties:
+        forward_to_email:
+          title: Forward To Email
+          type: string
+        local_part:
+          title: Local Part
+          type: string
+        password:
+          title: Password
+          type: string
+      required:
+      - local_part
+      title: UserEmailCreate
+      type: object
+    UserEmailUpdate:
+      properties:
+        is_catchall:
+          title: Is Catchall
+          type: boolean
+        password:
+          title: Password
+          type: string
+      title: UserEmailUpdate
+      type: object
+    UserUpdate:
+      properties:
+        address:
+          title: Address
+          type: string
+        address2:
+          title: Address2
+          type: string
+        city:
+          title: City
+          type: string
+        country:
+          title: Country
+          type: string
+        default_region_id:
+          default: 1
+          title: Default Region Id
+          type: integer
+        email:
+          format: email
+          title: Email
+          type: string
+        full_name:
+          title: Full Name
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        is_superuser:
+          title: Is Superuser
+          type: boolean
+        is_verified:
+          title: Is Verified
+          type: boolean
+        password:
+          title: Password
+          type: string
+        phone_number:
+          title: Phone Number
+          type: string
+        post_code:
+          title: Post Code
+          type: string
+        state:
+          title: State
+          type: string
+        tfa:
+          title: Tfa
+          type: integer
+      title: UserUpdate
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            type: string
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    app__models__site__SiteLive:
+      description: 'Exposed in API
+
+        TODO Traffic to your site is lighter than normal with most visitors coming
+        from COUNTRY'
+      properties:
+        active:
+          default: true
+          title: Active
+          type: boolean
+        allowed_ips:
+          default: ''
+          title: Allowed Ips
+          type: string
+        auto_update:
+          default: true
+          title: Auto Update
+          type: boolean
+        backup_plan:
+          title: Backup Plan
+          type: integer
+        busy:
+          default: creating
+          title: Busy
+          type: string
+        cf_fw_ids:
+          default: ''
+          title: Cf Fw Ids
+          type: string
+        created:
+          format: date-time
+          title: Created
+          type: string
+        db_password:
+          title: Db Password
+          type: string
+        db_prefix:
+          title: Db Prefix
+          type: string
+        dkim_key:
+          title: Dkim Key
+          type: string
+        domain:
+          title: Domain
+          type: string
+        domain_option:
+          default: testing
+          title: Domain Option
+          type: string
+        email_enabled:
+          title: Email Enabled
+          type: integer
+        favicon_file:
+          default: default.png
+          title: Favicon File
+          type: string
+        fqdn:
+          title: Fqdn
+          type: string
+        fs_value:
+          title: Fs Value
+          type: integer
+        git_url:
+          title: Git Url
+          type: string
+        http_auth_enabled:
+          default: false
+          title: Http Auth Enabled
+          type: boolean
+        http_auth_password:
+          default: watchful-chupacabra
+          title: Http Auth Password
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        last_dolt:
+          default: '1970-01-01T00:00:00'
+          format: date-time
+          title: Last Dolt
+          type: string
+        last_s3:
+          default: '1970-01-01T00:00:00'
+          format: date-time
+          title: Last S3
+          type: string
+        last_sync_hash:
+          title: Last Sync Hash
+          type: string
+        last_usage_set:
+          default: '1970-01-01T00:00:00'
+          format: date-time
+          title: Last Usage Set
+          type: string
+        pod_name:
+          title: Pod Name
+          type: string
+        pvc_name:
+          title: Pvc Name
+          type: string
+        region_id:
+          title: Region Id
+          type: integer
+        subdomain:
+          title: Subdomain
+          type: string
+        team_id:
+          format: uuid4
+          title: Team Id
+          type: string
+        template_name:
+          title: Template Name
+          type: string
+        tld:
+          title: Tld
+          type: string
+        tracked_tables:
+          default: ''
+          title: Tracked Tables
+          type: string
+        untracked_tables:
+          default: ''
+          title: Untracked Tables
+          type: string
+        user_id:
+          format: uuid4
+          title: User Id
+          type: string
+      required:
+      - subdomain
+      - domain
+      - tld
+      - fqdn
+      - user_id
+      - region_id
+      - fs_value
+      title: SiteLive
+      type: object
+    app__schemas__site_live__SiteLive:
+      properties:
+        active:
+          title: Active
+          type: boolean
+        busy:
+          title: Busy
+          type: string
+        dkim_key:
+          title: Dkim Key
+          type: string
+        fqdn:
+          title: Fqdn
+          type: string
+        git_url:
+          title: Git Url
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        region_id:
+          title: Region Id
+          type: integer
+        team_id:
+          format: uuid4
+          title: Team Id
+          type: string
+        untracked_tables:
+          title: Untracked Tables
+          type: string
+        user_id:
+          format: uuid4
+          title: User Id
+          type: string
+      required:
+      - fqdn
+      - id
+      - user_id
+      - region_id
+      - active
+      - team_id
+      title: SiteLive
+      type: object
+  securitySchemes:
+    APIKeyCookie:
+      in: cookie
+      name: msb
+      type: apiKey
+    OAuth2PasswordBearer:
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: auth/jwt/login
+      type: oauth2
+info:
+  description: OpenAPI schema for the Agency plan. Access for only $99USD per month!
+  title: Site Bay
+  version: 1.0.0
+  x-logo:
+    url: https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png
+openapi: 3.0.2
+paths:
+  /api/v1/domain-check:
+    get:
+      description: 'Check if a domain is correctly set up for Site Bay WordPress Hosting.
+
+        Your site''s DNS records need a CNAME pointed at $CITY.sitebay.org where $CITY
+        is a valid region''s city name'
+      operationId: domain_check
+      parameters:
+      - in: query
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Domain Check
+      tags:
+      - utils
+  /api/v1/plan:
+    get:
+      operationId: get_plans
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Plan'
+                title: Response Get Plans Api V1 Plan Get
+                type: array
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Plans
+      tags:
+      - plan
+    post:
+      operationId: create_plan
+      requestBody:
+        content:
+          application/json:
+            example:
+              additional_sites: 1
+              interval: month
+              new_team_name: Jane's WordPress Design Team
+              plan_type_name: business
+            schema:
+              $ref: '#/components/schemas/PlanCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Plan
+      tags:
+      - plan
+  /api/v1/plan/{plan_id}:
+    delete:
+      operationId: delete_plan
+      parameters:
+      - in: path
+        name: plan_id
+        required: true
+        schema:
+          format: uuid4
+          title: Plan Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Plan
+      tags:
+      - plan
+    get:
+      operationId: get_plan
+      parameters:
+      - in: path
+        name: plan_id
+        required: true
+        schema:
+          format: uuid4
+          title: Plan Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Plan
+      tags:
+      - plan
+    put:
+      operationId: update_plan
+      parameters:
+      - in: path
+        name: plan_id
+        required: true
+        schema:
+          format: uuid4
+          title: Plan Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Plan
+      tags:
+      - plan
+  /api/v1/plan/{plan_id}/preview:
+    get:
+      operationId: preview_change
+      parameters:
+      - in: path
+        name: plan_id
+        required: true
+        schema:
+          format: uuid4
+          title: Plan Id
+          type: string
+      - in: query
+        name: new_plan_type_name
+        required: true
+        schema:
+          title: New Plan Type Name
+          type: string
+      - in: query
+        name: additional_sites
+        required: true
+        schema:
+          title: Additional Sites
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proration'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Preview Change
+      tags:
+      - plan
+  /api/v1/region:
+    get:
+      operationId: get_regions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Region'
+                title: Response Get Regions Api V1 Region Get
+                type: array
+          description: Successful Response
+      summary: Get Regions
+      tags:
+      - region
+  /api/v1/region/{region_id}:
+    get:
+      operationId: get_region
+      parameters:
+      - in: path
+        name: region_id
+        required: true
+        schema:
+          title: Region Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Region
+      tags:
+      - region
+  /api/v1/revoke-oauth/{provider}:
+    delete:
+      operationId: revoke_oauth
+      parameters:
+      - in: path
+        name: provider
+        required: true
+        schema:
+          title: Provider
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Revoke Oauth
+      tags:
+      - user
+  /api/v1/site_live:
+    get:
+      operationId: get_sites_live
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+                title: Response Get Sites Live Api V1 Site Live Get
+                type: array
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Sites Live
+      tags:
+      - site_live
+    post:
+      operationId: create_site_live
+      requestBody:
+        content:
+          application/json:
+            example:
+              fqdn: www.example.org
+              team_id: $MY_TEAM_UUID
+              wordpressBlogName: Bob Law's Dog Blog
+              wordpressEmail: admin@example.org
+              wordpressFirstName: Bob
+              wordpressLastName: Law
+              wordpressPassword: A strong password
+              wordpressUsername: bob2002
+            schema:
+              $ref: '#/components/schemas/SiteLiveCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Site Live
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}:
+    delete:
+      operationId: delete_site_live
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Site Live
+      tags:
+      - site_live
+    get:
+      operationId: get_site_live
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Site Live
+      tags:
+      - site_live
+    put:
+      operationId: update_site_live
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteLiveUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Site Live
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/change-dev-mode:
+    patch:
+      operationId: change_dev_mode
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: value
+        required: true
+        schema:
+          title: Value
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Change Dev Mode
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/change-http-auth:
+    patch:
+      description: 'Enable or disable HTTP Basic Authentication for your WordPress
+        site.
+
+        You need to provide the username: sitebay and your auth password which you
+        can find in your dashboard or by
+
+        calling "Get Site Live" at GET /api/v1/site_live/{fqdn}
+
+        :param enabled:
+
+        :param db:
+
+        :param site_live:
+
+        :return:'
+      operationId: change_http_auth
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: enabled
+        required: true
+        schema:
+          title: Enabled
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Change Http Auth
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/clear-cache:
+    post:
+      operationId: clear_cache
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Clear Cache
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/cmd:
+    put:
+      operationId: shell_cmd_site_live
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: cmd
+        required: true
+        schema:
+          title: Cmd
+          type: string
+      - in: query
+        name: cwd
+        required: false
+        schema:
+          default: /bitnami/wordpress/wp-content
+          title: Cwd
+          type: string
+      - in: query
+        name: auto_track_dir
+        required: false
+        schema:
+          default: false
+          title: Auto Track Dir
+          type: boolean
+      - in: query
+        name: stage
+        required: false
+        schema:
+          default: false
+          title: Stage
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Shell Cmd Site Live
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/dns:
+    get:
+      description: 'Info: Allows user to view DNS records
+
+        Returns: JSON
+
+        Permissions: Member
+
+        Domain Option: NS'
+      operationId: get_dns_records
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Dns Records
+      tags:
+      - site_live
+    put:
+      description: 'Info: Allows user to update DNS records
+
+        Returns: Template Page
+
+        Permissions: Member
+
+        Domain Option: NS'
+      operationId: update_dns_record
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: dns_type
+        required: true
+        schema:
+          title: Dns Type
+          type: string
+      - in: query
+        name: dns_hostname
+        required: true
+        schema:
+          title: Dns Hostname
+          type: string
+      - in: query
+        name: dns_content
+        required: true
+        schema:
+          title: Dns Content
+          type: string
+      - in: query
+        name: dns_id
+        required: false
+        schema:
+          title: Dns Id
+          type: string
+      - in: query
+        name: dns_priority
+        required: false
+        schema:
+          default: 0
+          title: Dns Priority
+          type: integer
+      - in: query
+        name: dns_ttl
+        required: false
+        schema:
+          default: 1
+          title: Dns Ttl
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Dns Record
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/dns/{dns_id}:
+    delete:
+      description: 'Info: Allows user to delete DNS records
+
+        Returns: Template Page
+
+        Permissions: Member
+
+        Domain Option: NS'
+      operationId: delete_dns_record
+      parameters:
+      - in: path
+        name: dns_id
+        required: true
+        schema:
+          title: Dns Id
+          type: string
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Dns Record
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/email:
+    get:
+      operationId: get_emails
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Emails
+      tags:
+      - site_live
+    post:
+      operationId: create_email
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              forward_to_email: boblaw1989_@gmail.com
+              local_part: bob
+            schema:
+              $ref: '#/components/schemas/UserEmailCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Email
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/email/{user_email_id}:
+    delete:
+      operationId: delete_email
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: path
+        name: user_email_id
+        required: true
+        schema:
+          title: User Email Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Email
+      tags:
+      - site_live
+    patch:
+      operationId: update_email
+      parameters:
+      - in: path
+        name: user_email_id
+        required: true
+        schema:
+          title: User Email Id
+          type: integer
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              is_catchall: true
+            schema:
+              $ref: '#/components/schemas/UserEmailUpdate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Email
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/external-path:
+    get:
+      operationId: get_external_paths
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get External Paths
+      tags:
+      - site_live
+    post:
+      operationId: create_external_path
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              external_name: sitebaydocsprod.sitebay.ca
+              path: /support
+            schema:
+              $ref: '#/components/schemas/ExternalPathCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create External Path
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/external-path/{external_path_id}:
+    delete:
+      operationId: delete_external_path
+      parameters:
+      - in: path
+        name: external_path_id
+        required: true
+        schema:
+          format: uuid4
+          title: External Path Id
+          type: string
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete External Path
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/firewall:
+    delete:
+      operationId: disable_firewall
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: ip_address
+        required: true
+        schema:
+          title: Ip Address
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app__models__site__SiteLive'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Disable Firewall
+      tags:
+      - site_live
+    post:
+      description: 'Enable a firewall to the WordPress login page.
+
+        The rule is as follows: ''http.request.uri.path contains "/wp-login.php"''
+
+        :return: JSON'
+      operationId: enable_firewall
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Enable Firewall
+      tags:
+      - site_live
+    put:
+      operationId: modify_firewall
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: add_or_del
+        required: false
+        schema:
+          default: add
+          title: Add Or Del
+          type: string
+      - in: query
+        name: ip_address
+        required: true
+        schema:
+          title: Ip Address
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/app__models__site__SiteLive'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Modify Firewall
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/pit-restore:
+    get:
+      operationId: get_pit_restores
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Pit Restores
+      tags:
+      - site_live
+    post:
+      operationId: restore_site_live
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PITRestoreCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Restore Site Live
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/pit-restore/files:
+    get:
+      description: 'Fetches your site''s wp-content files list in JSON.
+
+        Also includes signed URLs which you can use to download previous files.
+
+        Does NOT restore or modify your site.'
+      operationId: get_files_at_point
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: restore_point
+        required: true
+        schema:
+          format: date-time
+          title: Restore Point
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Files At Point
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/pit-restore/{pit_restore_id}:
+    get:
+      operationId: get_pit_restore
+      parameters:
+      - in: path
+        name: pit_restore_id
+        required: true
+        schema:
+          format: uuid4
+          title: Pit Restore Id
+          type: string
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Pit Restore
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/stage:
+    delete:
+      operationId: delete_site_stage
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Site Stage
+      tags:
+      - site_live
+    post:
+      operationId: create_site_stage
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              restore_point: '2022-02-20T04:51:47.952597'
+              subdomain: staging
+            schema:
+              $ref: '#/components/schemas/SiteStageCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Site Stage
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/stage/commit:
+    post:
+      operationId: commit_site_stage
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Commit Site Stage
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/tag:
+    get:
+      operationId: get_tags
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Tag'
+                title: Response Get Tags Api V1 Site Live  Fqdn  Tag Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Tags
+      tags:
+      - site_live
+    post:
+      description: 'Create a tag for organizational purposes
+
+
+        - **name**: each tag must have a name
+
+        '
+      operationId: create_tag
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: customer_id_1251515
+            schema:
+              $ref: '#/components/schemas/TagCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Tag
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/tag/{tag_id}:
+    delete:
+      operationId: delete_tag
+      parameters:
+      - in: path
+        name: tag_id
+        required: true
+        schema:
+          format: uuid4
+          title: Tag Id
+          type: string
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Tag
+      tags:
+      - site_live
+  /api/v1/site_live/{fqdn}/usage:
+    get:
+      description: 'Get your site''s plan usage for a given period.
+
+
+        - **start**: The beginning of the usage period
+
+        - **end**: The end of the usage period
+
+        '
+      operationId: get_site_plan_usage
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      - in: query
+        name: start
+        required: true
+        schema:
+          format: date-time
+          title: Start
+          type: string
+      - in: query
+        name: end
+        required: true
+        schema:
+          format: date-time
+          title: End
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Site Plan Usage
+      tags:
+      - site_live
+  /api/v1/team:
+    get:
+      operationId: get_teams
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Team'
+                title: Response Get Teams Api V1 Team Get
+                type: array
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Teams
+      tags:
+      - team
+  /api/v1/team/{team_id}:
+    get:
+      operationId: get_team
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Team
+      tags:
+      - team
+  /api/v1/team/{team_id}/invite:
+    post:
+      operationId: create_team_member_invite
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              emails: friend1@sitebay.org,friend2@sitebay.org
+            schema:
+              $ref: '#/components/schemas/TeamMemberInviteCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberInvite'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Team Member Invite
+      tags:
+      - team
+  /api/v1/team/{team_id}/invite/{invite_id}:
+    post:
+      operationId: accept_team_member_invite
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      - in: path
+        name: invite_id
+        required: true
+        schema:
+          format: uuid4
+          title: Invite Id
+          type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberInvite'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Accept Team Member Invite
+      tags:
+      - team
+  /api/v1/team/{team_id}/member/{team_member_id}:
+    delete:
+      operationId: remove_team_member
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      - in: path
+        name: team_member_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Member Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Remove Team Member
+      tags:
+      - team
+    get:
+      operationId: get_team_member
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      - in: path
+        name: team_member_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Member Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Team Member
+      tags:
+      - team
+  /api/v1/team{team_id}/member:
+    get:
+      operationId: get_team_members
+      parameters:
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TeamMember'
+                title: Response Get Team Members Api V1 Team Team Id  Member Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Team Members
+      tags:
+      - team
+  /api/v1/template:
+    get:
+      operationId: get_templates
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Template'
+                title: Response Get Templates Api V1 Template Get
+                type: array
+          description: Successful Response
+      summary: Get Templates
+      tags:
+      - template
+    post:
+      operationId: submit_template
+      requestBody:
+        content:
+          application/json:
+            example:
+              full_description: A clothing store template based on shopify and woocommerce
+              name: my_ecommerce_template
+              plugins: wordfence,woocommerce,elementor
+              quickstart: https://github.com/wanda1987/mytemplate/README.md
+              short_description: An easy way to launch a storefront quick.
+              tag: business
+              wpress_url: https://github.com/wanda1987/mytemplate/template.wpress
+            schema:
+              $ref: '#/components/schemas/TemplateCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Submit Template
+      tags:
+      - template
+  /api/v1/template/{template_name}:
+    get:
+      operationId: get_template
+      parameters:
+      - in: path
+        name: template_name
+        required: true
+        schema:
+          title: Template Name
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Template
+      tags:
+      - template
+  /api/v1/ticket:
+    get:
+      operationId: get_tickets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Ticket'
+                title: Response Get Tickets Api V1 Ticket Get
+                type: array
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Tickets
+      tags:
+      - ticket
+    post:
+      operationId: create_ticket
+      requestBody:
+        content:
+          application/json:
+            example:
+              description: Help me set up an agency
+              domain: example.com
+              subject: Agency
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/TicketCreate'
+              default: ''
+              title: Obj In
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Ticket
+      tags:
+      - ticket
+  /api/v1/ticket/{ticket_id}:
+    delete:
+      operationId: delete_ticket
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          title: Ticket Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Ticket
+      tags:
+      - ticket
+    get:
+      operationId: get_ticket
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          title: Ticket Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Ticket
+      tags:
+      - ticket
+    put:
+      operationId: update_ticket
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          title: Ticket Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Ticket
+      tags:
+      - ticket
+  /api/v1/ticket/{ticket_id}/reply:
+    post:
+      operationId: create_ticket_reply
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          title: Ticket Id
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            example:
+              description: Thanks for the help
+              resolve: true
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/TicketReplyCreate'
+              default: ''
+              title: Obj In
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketReply'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create Ticket Reply
+      tags:
+      - ticket
+  /api/v1/user/me:
+    get:
+      operationId: get_user_me
+      parameters:
+      - in: query
+        name: user_id
+        required: true
+        schema:
+          format: uuid4
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get User Me
+      tags:
+      - user
+    put:
+      operationId: update_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdate'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update User
+      tags:
+      - user
+  /api/v1/user/me/payment-method/{payment_method_id}:
+    delete:
+      operationId: delete_card
+      parameters:
+      - in: path
+        name: payment_method_id
+        required: true
+        schema:
+          title: Payment Method Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Card
+      tags:
+      - user
+    put:
+      operationId: update_payment_method
+      parameters:
+      - in: path
+        name: payment_method_id
+        required: true
+        schema:
+          title: Payment Method Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update Payment Method
+      tags:
+      - user
+  /api/v1/verify-git-sync-directories:
+    get:
+      description: 'If invalid, returns 400 error with ''detail'' key of how your
+        repo is invalid.
+
+        Make sure your git repo contains plugins, uploads, themes folders in the root
+        dir.
+
+        Returns JSON {"success": "true", "git_url": git_url}'
+      operationId: verify_git_sync_directories
+      parameters:
+      - in: query
+        name: git_url
+        required: true
+        schema:
+          title: Git Url
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Verify Git Sync Directories
+      tags:
+      - utils
