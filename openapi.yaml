@@ -157,6 +157,50 @@ components:
       - created
       title: Region
       type: object
+    SiteLive:
+      properties:
+        active:
+          title: Active
+          type: boolean
+        busy:
+          title: Busy
+          type: string
+        dkim_key:
+          title: Dkim Key
+          type: string
+        fqdn:
+          title: Fqdn
+          type: string
+        git_url:
+          title: Git Url
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        region_id:
+          title: Region Id
+          type: integer
+        team_id:
+          format: uuid4
+          title: Team Id
+          type: string
+        untracked_tables:
+          title: Untracked Tables
+          type: string
+        user_id:
+          format: uuid4
+          title: User Id
+          type: string
+      required:
+      - fqdn
+      - id
+      - user_id
+      - region_id
+      - active
+      - team_id
+      title: SiteLive
+      type: object
     SiteLiveCreate:
       properties:
         fqdn:
@@ -286,19 +330,6 @@ components:
       required:
       - id
       title: TeamMember
-      type: object
-    TeamMemberInvite:
-      properties: {}
-      title: TeamMemberInvite
-      type: object
-    TeamMemberInviteCreate:
-      properties:
-        emails:
-          title: Emails
-          type: string
-      required:
-      - emails
-      title: TeamMemberInviteCreate
       type: object
     Template:
       properties:
@@ -463,6 +494,64 @@ components:
       - subject
       title: TicketUpdate
       type: object
+    User:
+      description: Base User model.
+      properties:
+        address:
+          title: Address
+          type: string
+        address2:
+          title: Address2
+          type: string
+        city:
+          title: City
+          type: string
+        country:
+          title: Country
+          type: string
+        default_region_id:
+          default: 1
+          title: Default Region Id
+          type: integer
+        email:
+          format: email
+          title: Email
+          type: string
+        full_name:
+          title: Full Name
+          type: string
+        id:
+          format: uuid4
+          title: Id
+          type: string
+        is_active:
+          default: true
+          title: Is Active
+          type: boolean
+        is_superuser:
+          default: false
+          title: Is Superuser
+          type: boolean
+        is_verified:
+          default: false
+          title: Is Verified
+          type: boolean
+        phone_number:
+          title: Phone Number
+          type: string
+        post_code:
+          title: Post Code
+          type: string
+        state:
+          title: State
+          type: string
+        tfa:
+          title: Tfa
+          type: integer
+      required:
+      - email
+      title: User
+      type: object
     UserEmailCreate:
       properties:
         forward_to_email:
@@ -558,189 +647,6 @@ components:
       - type
       title: ValidationError
       type: object
-    app__models__site__SiteLive:
-      description: 'Exposed in API
-
-        TODO Traffic to your site is lighter than normal with most visitors coming
-        from COUNTRY'
-      properties:
-        active:
-          default: true
-          title: Active
-          type: boolean
-        allowed_ips:
-          default: ''
-          title: Allowed Ips
-          type: string
-        auto_update:
-          default: true
-          title: Auto Update
-          type: boolean
-        backup_plan:
-          title: Backup Plan
-          type: integer
-        busy:
-          default: creating
-          title: Busy
-          type: string
-        cf_fw_ids:
-          default: ''
-          title: Cf Fw Ids
-          type: string
-        created:
-          format: date-time
-          title: Created
-          type: string
-        db_password:
-          title: Db Password
-          type: string
-        db_prefix:
-          title: Db Prefix
-          type: string
-        dkim_key:
-          title: Dkim Key
-          type: string
-        domain:
-          title: Domain
-          type: string
-        domain_option:
-          default: testing
-          title: Domain Option
-          type: string
-        email_enabled:
-          title: Email Enabled
-          type: integer
-        favicon_file:
-          default: default.png
-          title: Favicon File
-          type: string
-        fqdn:
-          title: Fqdn
-          type: string
-        fs_value:
-          title: Fs Value
-          type: integer
-        git_url:
-          title: Git Url
-          type: string
-        http_auth_enabled:
-          default: false
-          title: Http Auth Enabled
-          type: boolean
-        http_auth_password:
-          default: watchful-chupacabra
-          title: Http Auth Password
-          type: string
-        id:
-          format: uuid4
-          title: Id
-          type: string
-        last_dolt:
-          default: '1970-01-01T00:00:00'
-          format: date-time
-          title: Last Dolt
-          type: string
-        last_s3:
-          default: '1970-01-01T00:00:00'
-          format: date-time
-          title: Last S3
-          type: string
-        last_sync_hash:
-          title: Last Sync Hash
-          type: string
-        last_usage_set:
-          default: '1970-01-01T00:00:00'
-          format: date-time
-          title: Last Usage Set
-          type: string
-        pod_name:
-          title: Pod Name
-          type: string
-        pvc_name:
-          title: Pvc Name
-          type: string
-        region_id:
-          title: Region Id
-          type: integer
-        subdomain:
-          title: Subdomain
-          type: string
-        team_id:
-          format: uuid4
-          title: Team Id
-          type: string
-        template_name:
-          title: Template Name
-          type: string
-        tld:
-          title: Tld
-          type: string
-        tracked_tables:
-          default: ''
-          title: Tracked Tables
-          type: string
-        untracked_tables:
-          default: ''
-          title: Untracked Tables
-          type: string
-        user_id:
-          format: uuid4
-          title: User Id
-          type: string
-      required:
-      - subdomain
-      - domain
-      - tld
-      - fqdn
-      - user_id
-      - region_id
-      - fs_value
-      title: SiteLive
-      type: object
-    app__schemas__site_live__SiteLive:
-      properties:
-        active:
-          title: Active
-          type: boolean
-        busy:
-          title: Busy
-          type: string
-        dkim_key:
-          title: Dkim Key
-          type: string
-        fqdn:
-          title: Fqdn
-          type: string
-        git_url:
-          title: Git Url
-          type: string
-        id:
-          format: uuid4
-          title: Id
-          type: string
-        region_id:
-          title: Region Id
-          type: integer
-        team_id:
-          format: uuid4
-          title: Team Id
-          type: string
-        untracked_tables:
-          title: Untracked Tables
-          type: string
-        user_id:
-          format: uuid4
-          title: User Id
-          type: string
-      required:
-      - fqdn
-      - id
-      - user_id
-      - region_id
-      - active
-      - team_id
-      title: SiteLive
-      type: object
   securitySchemes:
     APIKeyCookie:
       in: cookie
@@ -818,7 +724,10 @@ paths:
               new_team_name: Jane's WordPress Design Team
               plan_type_name: business
             schema:
-              $ref: '#/components/schemas/PlanCreate'
+              allOf:
+              - $ref: '#/components/schemas/PlanCreate'
+              description: Your new plan's details
+              title: Plan In
       responses:
         '201':
           content:
@@ -1040,6 +949,7 @@ paths:
       - user
   /api/v1/site_live:
     get:
+      description: Get details about all of your live sites
       operationId: get_sites_live
       responses:
         '200':
@@ -1047,16 +957,19 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+                  $ref: '#/components/schemas/SiteLive'
                 title: Response Get Sites Live Api V1 Site Live Get
                 type: array
           description: Successful Response
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Sites Live
+      summary: Get your sites
       tags:
       - site_live
+      - site_live
     post:
+      description: Create a new site by providing your domain and your site's WordPress
+        details
       operationId: create_site_live
       requestBody:
         content:
@@ -1071,14 +984,17 @@ paths:
               wordpressPassword: A strong password
               wordpressUsername: bob2002
             schema:
-              $ref: '#/components/schemas/SiteLiveCreate'
+              allOf:
+              - $ref: '#/components/schemas/SiteLiveCreate'
+              description: Your new site's details
+              title: Obj In
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
-          description: Successful Response
+                $ref: '#/components/schemas/SiteLive'
+          description: Your new site's details
         '422':
           content:
             application/json:
@@ -1087,11 +1003,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Create Site Live
+      summary: Create a site
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}:
     delete:
+      description: This permanently deletes your site, and its stage site if one exists
       operationId: delete_site_live
       parameters:
       - in: path
@@ -1114,10 +1032,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Delete Site Live
+      summary: Delete your live site
       tags:
       - site_live
+      - site_live
     get:
+      description: Get details about your live site
       operationId: get_site_live
       parameters:
       - in: path
@@ -1131,7 +1051,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+                $ref: '#/components/schemas/SiteLive'
           description: Successful Response
         '422':
           content:
@@ -1141,8 +1061,9 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Site Live
+      summary: Get your live site
       tags:
+      - site_live
       - site_live
     put:
       operationId: update_site_live
@@ -1164,7 +1085,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/app__schemas__site_live__SiteLive'
+                $ref: '#/components/schemas/SiteLive'
           description: Successful Response
         '422':
           content:
@@ -1176,6 +1097,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Update Site Live
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/change-dev-mode:
     patch:
@@ -1210,6 +1132,7 @@ paths:
       summary: Change Dev Mode
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/change-http-auth:
     patch:
       description: 'Enable or disable HTTP Basic Authentication for your WordPress
@@ -1218,15 +1141,7 @@ paths:
         You need to provide the username: sitebay and your auth password which you
         can find in your dashboard or by
 
-        calling "Get Site Live" at GET /api/v1/site_live/{fqdn}
-
-        :param enabled:
-
-        :param db:
-
-        :param site_live:
-
-        :return:'
+        calling "Get Site Live" at GET /api/v1/site_live/{fqdn}'
       operationId: change_http_auth
       parameters:
       - in: path
@@ -1258,8 +1173,10 @@ paths:
       summary: Change Http Auth
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/clear-cache:
     post:
+      description: Purges the Cloudflare CDN cache for your site
       operationId: clear_cache
       parameters:
       - in: path
@@ -1282,11 +1199,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Clear Cache
+      summary: Clear the cache
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/cmd:
     put:
+      description: Send a bash shell command to your site, such as a WP-CLI command
       operationId: shell_cmd_site_live
       parameters:
       - in: path
@@ -1336,8 +1255,9 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Shell Cmd Site Live
+      summary: Execute shell command
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/dns:
     get:
@@ -1372,6 +1292,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Get Dns Records
       tags:
+      - site_live
       - site_live
     put:
       description: 'Info: Allows user to update DNS records
@@ -1444,6 +1365,7 @@ paths:
       summary: Update Dns Record
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/dns/{dns_id}:
     delete:
       description: 'Info: Allows user to delete DNS records
@@ -1484,6 +1406,7 @@ paths:
       summary: Delete Dns Record
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/email:
     get:
       operationId: get_emails
@@ -1510,6 +1433,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Get Emails
       tags:
+      - site_live
       - site_live
     post:
       operationId: create_email
@@ -1545,6 +1469,7 @@ paths:
       summary: Create Email
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/email/{user_email_id}:
     delete:
       operationId: delete_email
@@ -1577,6 +1502,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Delete Email
       tags:
+      - site_live
       - site_live
     patch:
       operationId: update_email
@@ -1617,6 +1543,7 @@ paths:
       summary: Update Email
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/external-path:
     get:
       operationId: get_external_paths
@@ -1643,6 +1570,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Get External Paths
       tags:
+      - site_live
       - site_live
     post:
       operationId: create_external_path
@@ -1678,6 +1606,7 @@ paths:
       summary: Create External Path
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/external-path/{external_path_id}:
     delete:
       operationId: delete_external_path
@@ -1712,6 +1641,7 @@ paths:
       summary: Delete External Path
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/firewall:
     delete:
       operationId: disable_firewall
@@ -1722,18 +1652,6 @@ paths:
         schema:
           title: Fqdn
           type: string
-      - in: query
-        name: ip_address
-        required: true
-        schema:
-          title: Ip Address
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/app__models__site__SiteLive'
-        required: true
       responses:
         '200':
           content:
@@ -1750,6 +1668,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Disable Firewall
       tags:
+      - site_live
       - site_live
     post:
       description: 'Enable a firewall to the WordPress login page.
@@ -1782,6 +1701,7 @@ paths:
       summary: Enable Firewall
       tags:
       - site_live
+      - site_live
     put:
       operationId: modify_firewall
       parameters:
@@ -1804,12 +1724,6 @@ paths:
         schema:
           title: Ip Address
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/app__models__site__SiteLive'
-        required: true
       responses:
         '200':
           content:
@@ -1826,6 +1740,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Modify Firewall
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/pit-restore:
     get:
@@ -1853,6 +1768,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Get Pit Restores
       tags:
+      - site_live
       - site_live
     post:
       operationId: restore_site_live
@@ -1885,6 +1801,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Restore Site Live
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/pit-restore/files:
     get:
@@ -1925,6 +1842,7 @@ paths:
       summary: Get Files At Point
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/pit-restore/{pit_restore_id}:
     get:
       operationId: get_pit_restore
@@ -1959,6 +1877,7 @@ paths:
       summary: Get Pit Restore
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/stage:
     delete:
       operationId: delete_site_stage
@@ -1986,6 +1905,7 @@ paths:
       summary: Delete Site Stage
       tags:
       - site_live
+      - site_live
     post:
       operationId: create_site_stage
       parameters:
@@ -1999,7 +1919,7 @@ paths:
         content:
           application/json:
             example:
-              restore_point: '2022-02-20T04:51:47.952597'
+              restore_point: '2022-02-22T03:01:29.882117'
               subdomain: staging
             schema:
               $ref: '#/components/schemas/SiteStageCreate'
@@ -2019,6 +1939,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Create Site Stage
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/stage/commit:
     post:
@@ -2046,6 +1967,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Commit Site Stage
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/tag:
     get:
@@ -2077,6 +1999,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Get Tags
       tags:
+      - site_live
       - site_live
     post:
       description: 'Create a tag for organizational purposes
@@ -2118,6 +2041,7 @@ paths:
       summary: Create Tag
       tags:
       - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/tag/{tag_id}:
     delete:
       operationId: delete_tag
@@ -2151,6 +2075,7 @@ paths:
       - OAuth2PasswordBearer: []
       summary: Delete Tag
       tags:
+      - site_live
       - site_live
   /api/v1/site_live/{fqdn}/usage:
     get:
@@ -2201,8 +2126,10 @@ paths:
       summary: Get Site Plan Usage
       tags:
       - site_live
+      - site_live
   /api/v1/team:
     get:
+      description: Get details about all of your owned teams
       operationId: get_teams
       responses:
         '200':
@@ -2216,11 +2143,13 @@ paths:
           description: Successful Response
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Teams
+      summary: Get your owned teams
       tags:
+      - team
       - team
   /api/v1/team/{team_id}:
     get:
+      description: Get details about an owned team team by its ID
       operationId: get_team
       parameters:
       - in: path
@@ -2245,98 +2174,27 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Team
+      summary: Get a team
       tags:
       - team
-  /api/v1/team/{team_id}/invite:
-    post:
-      operationId: create_team_member_invite
-      parameters:
-      - in: path
-        name: team_id
-        required: true
-        schema:
-          format: uuid4
-          title: Team Id
-          type: string
-      requestBody:
-        content:
-          application/json:
-            example:
-              emails: friend1@sitebay.org,friend2@sitebay.org
-            schema:
-              $ref: '#/components/schemas/TeamMemberInviteCreate'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamMemberInvite'
-          description: Successful Response
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Create Team Member Invite
-      tags:
-      - team
-  /api/v1/team/{team_id}/invite/{invite_id}:
-    post:
-      operationId: accept_team_member_invite
-      parameters:
-      - in: path
-        name: team_id
-        required: true
-        schema:
-          format: uuid4
-          title: Team Id
-          type: string
-      - in: path
-        name: invite_id
-        required: true
-        schema:
-          format: uuid4
-          title: Invite Id
-          type: string
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamMemberInvite'
-          description: Successful Response
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Accept Team Member Invite
-      tags:
       - team
   /api/v1/team/{team_id}/member/{team_member_id}:
     delete:
       operationId: remove_team_member
       parameters:
       - in: path
-        name: team_id
-        required: true
-        schema:
-          format: uuid4
-          title: Team Id
-          type: string
-      - in: path
         name: team_member_id
         required: true
         schema:
           format: uuid4
           title: Team Member Id
+          type: string
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
           type: string
       responses:
         '200':
@@ -2355,22 +2213,23 @@ paths:
       summary: Remove Team Member
       tags:
       - team
+      - team
     get:
       operationId: get_team_member
       parameters:
-      - in: path
-        name: team_id
-        required: true
-        schema:
-          format: uuid4
-          title: Team Id
-          type: string
       - in: path
         name: team_member_id
         required: true
         schema:
           format: uuid4
           title: Team Member Id
+          type: string
+      - in: path
+        name: team_id
+        required: true
+        schema:
+          format: uuid4
+          title: Team Id
           type: string
       responses:
         '200':
@@ -2390,8 +2249,10 @@ paths:
       summary: Get Team Member
       tags:
       - team
+      - team
   /api/v1/team{team_id}/member:
     get:
+      description: Get a list of Team Members
       operationId: get_team_members
       parameters:
       - in: path
@@ -2410,7 +2271,7 @@ paths:
                   $ref: '#/components/schemas/TeamMember'
                 title: Response Get Team Members Api V1 Team Team Id  Member Get
                 type: array
-          description: Successful Response
+          description: Your teams members
         '422':
           content:
             application/json:
@@ -2419,8 +2280,9 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Team Members
+      summary: Get a team's members
       tags:
+      - team
       - team
   /api/v1/template:
     get:
@@ -2675,28 +2537,19 @@ paths:
       - ticket
   /api/v1/user/me:
     get:
+      description: Create a new site by providing your domain and your site's WordPress
+        details
       operationId: get_user_me
-      parameters:
-      - in: query
-        name: user_id
-        required: true
-        schema:
-          format: uuid4
-          title: User Id
-          type: string
       responses:
         '200':
           content:
             application/json:
-              schema: {}
-          description: Successful Response
-        '422':
-          content:
-            application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      summary: Get User Me
+                $ref: '#/components/schemas/User'
+          description: Your new site's details
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create a site
       tags:
       - user
     put:
@@ -2704,9 +2557,23 @@ paths:
       requestBody:
         content:
           application/json:
+            example:
+              address: string
+              address2: string
+              city: string
+              country: string
+              default_region_id: 1
+              full_name: string
+              password: a very strong password
+              phone_number: string
+              post_code: string
+              state: string
+              tfa: 0
             schema:
-              $ref: '#/components/schemas/UserUpdate'
-        required: true
+              allOf:
+              - $ref: '#/components/schemas/UserUpdate'
+              description: Your new plan's details
+              title: User In
       responses:
         '200':
           content:
