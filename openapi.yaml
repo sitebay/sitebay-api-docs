@@ -1,5 +1,53 @@
 components:
   schemas:
+    Body_create_migration_api_v1_migration_post:
+      properties:
+        current_url:
+          title: Current Url
+          type: string
+        extra:
+          title: Extra
+          type: string
+        ftp_address:
+          title: Ftp Address
+          type: string
+        ftp_password:
+          title: Ftp Password
+          type: string
+        ftp_user:
+          title: Ftp User
+          type: string
+        host:
+          title: Host
+          type: string
+        host_password:
+          title: Host Password
+          type: string
+        host_user:
+          title: Host User
+          type: string
+        migration_type:
+          title: Migration Type
+          type: string
+        wordpress_password:
+          title: Wordpress Password
+          type: string
+        wordpress_user:
+          title: Wordpress User
+          type: string
+        zip_file:
+          format: binary
+          title: Zip File
+          type: string
+        zip_file_name:
+          title: Zip File Name
+          type: string
+      required:
+      - wordpress_user
+      - wordpress_password
+      - current_url
+      title: Body_create_migration_api_v1_migration_post
+      type: object
     ExternalPathCreate:
       properties:
         external_name:
@@ -21,6 +69,50 @@ components:
           title: Detail
           type: array
       title: HTTPValidationError
+      type: object
+    Migration:
+      properties:
+        current_url:
+          title: Current Url
+          type: string
+        extra:
+          title: Extra
+          type: string
+        ftp_address:
+          title: Ftp Address
+          type: string
+        ftp_password:
+          title: Ftp Password
+          type: string
+        ftp_user:
+          title: Ftp User
+          type: string
+        host:
+          title: Host
+          type: string
+        host_password:
+          title: Host Password
+          type: string
+        host_user:
+          title: Host User
+          type: string
+        migration_type:
+          title: Migration Type
+          type: string
+        wordpress_password:
+          title: Wordpress Password
+          type: string
+        wordpress_user:
+          title: Wordpress User
+          type: string
+        zip_file_name:
+          title: Zip File Name
+          type: string
+      required:
+      - wordpress_user
+      - wordpress_password
+      - current_url
+      title: Migration
       type: object
     PITRestoreCreate:
       properties:
@@ -114,15 +206,6 @@ components:
       - additional_sites
       - plan_type_name
       title: PlanUpdate
-      type: object
-    Proration:
-      properties:
-        proration_amount:
-          title: Proration Amount
-          type: integer
-      required:
-      - proration_amount
-      title: Proration
       type: object
     Region:
       properties:
@@ -494,64 +577,6 @@ components:
       - subject
       title: TicketUpdate
       type: object
-    User:
-      description: Base User model.
-      properties:
-        address:
-          title: Address
-          type: string
-        address2:
-          title: Address2
-          type: string
-        city:
-          title: City
-          type: string
-        country:
-          title: Country
-          type: string
-        default_region_id:
-          default: 1
-          title: Default Region Id
-          type: integer
-        email:
-          format: email
-          title: Email
-          type: string
-        full_name:
-          title: Full Name
-          type: string
-        id:
-          format: uuid4
-          title: Id
-          type: string
-        is_active:
-          default: true
-          title: Is Active
-          type: boolean
-        is_superuser:
-          default: false
-          title: Is Superuser
-          type: boolean
-        is_verified:
-          default: false
-          title: Is Verified
-          type: boolean
-        phone_number:
-          title: Phone Number
-          type: string
-        post_code:
-          title: Post Code
-          type: string
-        state:
-          title: State
-          type: string
-        tfa:
-          title: Tfa
-          type: integer
-      required:
-      - email
-      title: User
-      type: object
     UserEmailCreate:
       properties:
         forward_to_email:
@@ -666,7 +691,7 @@ info:
     url: https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png
 openapi: 3.0.2
 paths:
-  /api/v1/domain-check:
+  /api/v1/domain_check:
     get:
       description: 'Check if a domain is correctly set up for Site Bay WordPress Hosting.
 
@@ -695,6 +720,79 @@ paths:
       summary: Domain Check
       tags:
       - utils
+  /api/v1/migration:
+    get:
+      operationId: get_migrations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Migration'
+                title: Response Get Migrations Api V1 Migration Get
+                type: array
+          description: Successful Response
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Migrations
+      tags:
+      - migration
+    post:
+      description: Request a new site migration by providing your old host's domain
+        and your site's login details
+      operationId: create_migration
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_create_migration_api_v1_migration_post'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Migration'
+          description: Your new migration's details
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Create a migration
+      tags:
+      - migration
+  /api/v1/migration/{migration_id}:
+    get:
+      operationId: delete_migration
+      parameters:
+      - in: path
+        name: migration_id
+        required: true
+        schema:
+          title: Migration Id
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete Migration
+      tags:
+      - migration
   /api/v1/plan:
     get:
       operationId: get_plans
@@ -863,8 +961,7 @@ paths:
         '200':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Proration'
+              schema: {}
           description: Successful Response
         '422':
           content:
@@ -921,6 +1018,7 @@ paths:
       - region
   /api/v1/revoke-oauth/{provider}:
     delete:
+      description: Revoke your Git OAuth permission
       operationId: revoke_oauth
       parameters:
       - in: path
@@ -933,9 +1031,8 @@ paths:
         '200':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/UserUpdate'
-          description: Successful Response
+              schema: {}
+          description: JSON
         '422':
           content:
             application/json:
@@ -944,7 +1041,7 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Revoke Oauth
+      summary: Revoke OAuth
       tags:
       - user
   /api/v1/site_live:
@@ -1101,6 +1198,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/change-dev-mode:
     patch:
+      description: Enable or disable HTTP Basic Authentication
       operationId: change_dev_mode
       parameters:
       - in: path
@@ -1120,7 +1218,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1129,19 +1227,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Change Dev Mode
+      summary: Change HTTP Auth
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/change-http-auth:
     patch:
-      description: 'Enable or disable HTTP Basic Authentication for your WordPress
-        site.
-
-        You need to provide the username: sitebay and your auth password which you
-        can find in your dashboard or by
-
-        calling "Get Site Live" at GET /api/v1/site_live/{fqdn}'
+      description: Enable or disable HTTP Basic Authentication
       operationId: change_http_auth
       parameters:
       - in: path
@@ -1161,7 +1253,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1170,7 +1262,7 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Change Http Auth
+      summary: Change HTTP Auth
       tags:
       - site_live
       - site_live
@@ -1261,13 +1353,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/dns:
     get:
-      description: 'Info: Allows user to view DNS records
-
-        Returns: JSON
-
-        Permissions: Member
-
-        Domain Option: NS'
+      description: Get a nameserver configured site's DNS records
       operationId: get_dns_records
       parameters:
       - in: path
@@ -1281,7 +1367,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON list of DNS records
         '422':
           content:
             application/json:
@@ -1290,16 +1376,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Dns Records
+      summary: Get DNS records
       tags:
       - site_live
       - site_live
     put:
-      description: 'Info: Allows user to update DNS records
-
-        Returns: Template Page
-
-        Permissions: Member
+      description: 'Allows a nameserver configured site to update DNS records
 
         Domain Option: NS'
       operationId: update_dns_record
@@ -1366,6 +1448,62 @@ paths:
       tags:
       - site_live
       - site_live
+  /api/v1/site_live/{fqdn}/dns/email_dns_records:
+    get:
+      description: Get the required records for our custom email service
+      operationId: get_mail_dns
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON list of requisite DNS records
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get Required mail DNS records
+      tags:
+      - site_live
+      - site_live
+    post:
+      operationId: add_mail_dns
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Add Mail Dns
+      tags:
+      - site_live
+      - site_live
   /api/v1/site_live/{fqdn}/dns/{dns_id}:
     delete:
       description: 'Info: Allows user to delete DNS records
@@ -1409,6 +1547,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/email:
     get:
+      description: Get all custom email accounts
       operationId: get_emails
       parameters:
       - in: path
@@ -1422,7 +1561,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: List of UserEmailSchema
         '422':
           content:
             application/json:
@@ -1436,6 +1575,15 @@ paths:
       - site_live
       - site_live
     post:
+      description: 'Create a Site Bay custom email. You can create a forward email
+        which just forwards to another email provider, such as gmail.
+
+        You can create a managed email by leaving the "forward_to_email" param blank
+        and including a "password" param.
+
+        You can also make this a catchall by calling PATCH "/{fqdn}/email/{user_email_address}".
+
+        Your password must meet password strength requirements.'
       operationId: create_email
       parameters:
       - in: path
@@ -1470,8 +1618,9 @@ paths:
       tags:
       - site_live
       - site_live
-  /api/v1/site_live/{fqdn}/email/{user_email_id}:
+  /api/v1/site_live/{fqdn}/email/{user_email_address}:
     delete:
+      description: Delete a custom email account
       operationId: delete_email
       parameters:
       - in: path
@@ -1481,17 +1630,17 @@ paths:
           title: Fqdn
           type: string
       - in: path
-        name: user_email_id
+        name: user_email_address
         required: true
         schema:
-          title: User Email Id
-          type: integer
+          title: User Email Address
+          type: string
       responses:
         '200':
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1505,14 +1654,15 @@ paths:
       - site_live
       - site_live
     patch:
+      description: Update a custom email account
       operationId: update_email
       parameters:
       - in: path
-        name: user_email_id
+        name: user_email_address
         required: true
         schema:
-          title: User Email Id
-          type: integer
+          title: User Email Address
+          type: string
       - in: path
         name: fqdn
         required: true
@@ -1524,6 +1674,7 @@ paths:
           application/json:
             example:
               is_catchall: true
+              password: A very strong password
             schema:
               $ref: '#/components/schemas/UserEmailUpdate'
       responses:
@@ -1531,7 +1682,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1546,6 +1697,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/external-path:
     get:
+      description: Get details about your site's external path configs
       operationId: get_external_paths
       parameters:
       - in: path
@@ -1559,7 +1711,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: List of ExternalPathSchema
         '422':
           content:
             application/json:
@@ -1573,6 +1725,7 @@ paths:
       - site_live
       - site_live
     post:
+      description: Connect an external URL to your site on a subpath
       operationId: create_external_path
       parameters:
       - in: path
@@ -1594,7 +1747,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: ExternalPathSchema
         '422':
           content:
             application/json:
@@ -1609,6 +1762,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/external-path/{external_path_id}:
     delete:
+      description: Delete the link between an external URL and your site
       operationId: delete_external_path
       parameters:
       - in: path
@@ -1629,7 +1783,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1644,6 +1798,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/firewall:
     delete:
+      description: Disable wp-login firewall
       operationId: disable_firewall
       parameters:
       - in: path
@@ -1657,7 +1812,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1666,16 +1821,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Disable Firewall
+      summary: Disable the firewall
       tags:
       - site_live
       - site_live
     post:
-      description: 'Enable a firewall to the WordPress login page.
-
-        The rule is as follows: ''http.request.uri.path contains "/wp-login.php"''
-
-        :return: JSON'
+      description: Enable the wp-login firewall
       operationId: enable_firewall
       parameters:
       - in: path
@@ -1689,7 +1840,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON list of allowed IPs
         '422':
           content:
             application/json:
@@ -1698,11 +1849,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Enable Firewall
+      summary: Enable the firewall
       tags:
       - site_live
       - site_live
     put:
+      description: Add/Delete an IP from the wp-login firewall
       operationId: modify_firewall
       parameters:
       - in: path
@@ -1729,7 +1881,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1738,12 +1890,43 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Modify Firewall
+      summary: Modify the firewall
+      tags:
+      - site_live
+      - site_live
+  /api/v1/site_live/{fqdn}/mx_check:
+    get:
+      description: Check your mail related DNS records
+      operationId: mx_check
+      parameters:
+      - in: path
+        name: fqdn
+        required: true
+        schema:
+          title: Fqdn
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: MX Check
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/pit-restore:
     get:
+      description: Get all the results of a site's restores to a previous point in
+        time
       operationId: get_pit_restores
       parameters:
       - in: path
@@ -1757,7 +1940,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: PIT Restores details
         '422':
           content:
             application/json:
@@ -1766,12 +1949,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Pit Restores
+      summary: Get PIT Restores
       tags:
       - site_live
       - site_live
     post:
-      operationId: restore_site_live
+      description: Restore your site to a previous point in time, down to the minute
+      operationId: restore_site
       parameters:
       - in: path
         name: fqdn
@@ -1790,7 +1974,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: PIT Restore details
         '422':
           content:
             application/json:
@@ -1799,17 +1983,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Restore Site Live
+      summary: Create PIT Restore
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/pit-restore/files:
     get:
-      description: 'Fetches your site''s wp-content files list in JSON.
-
-        Also includes signed URLs which you can use to download previous files.
-
-        Does NOT restore or modify your site.'
+      description: Get a list of wp-content files at a point in time
       operationId: get_files_at_point
       parameters:
       - in: path
@@ -1830,7 +2010,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1839,12 +2019,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Files At Point
+      summary: PIT Files
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/pit-restore/{pit_restore_id}:
     get:
+      description: Get the results of a site's restore to a previous point in time
       operationId: get_pit_restore
       parameters:
       - in: path
@@ -1865,7 +2046,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: PIT Restore details
         '422':
           content:
             application/json:
@@ -1874,7 +2055,7 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Pit Restore
+      summary: Get PIT Restore
       tags:
       - site_live
       - site_live
@@ -1919,7 +2100,7 @@ paths:
         content:
           application/json:
             example:
-              restore_point: '2022-02-22T03:01:29.882117'
+              restore_point: '2022-03-01T05:32:07.392605'
               subdomain: staging
             schema:
               $ref: '#/components/schemas/SiteStageCreate'
@@ -2537,22 +2718,21 @@ paths:
       - ticket
   /api/v1/user/me:
     get:
-      description: Create a new site by providing your domain and your site's WordPress
-        details
+      description: Get your user data
       operationId: get_user_me
       responses:
         '200':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: Your new site's details
+              schema: {}
+          description: Your API token's user details
       security:
       - OAuth2PasswordBearer: []
-      summary: Create a site
+      summary: Get own user
       tags:
       - user
     put:
+      description: Update your user data
       operationId: update_user
       requestBody:
         content:
@@ -2578,9 +2758,8 @@ paths:
         '200':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/UserUpdate'
-          description: Successful Response
+              schema: {}
+          description: Your updated user details
         '422':
           content:
             application/json:
@@ -2589,12 +2768,28 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Update User
+      summary: Update user
+      tags:
+      - user
+  /api/v1/user/me/payment-method:
+    get:
+      description: Get your payment methods
+      operationId: get_payment_methods
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON list of your payment methods
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get payment methods
       tags:
       - user
   /api/v1/user/me/payment-method/{payment_method_id}:
     delete:
-      operationId: delete_card
+      description: Delete a non-default payment method
+      operationId: delete_payment_method
       parameters:
       - in: path
         name: payment_method_id
@@ -2607,7 +2802,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -2616,10 +2811,11 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Delete Card
+      summary: Delete payment method
       tags:
       - user
     put:
+      description: Select your default payment method to charge every billing cycle
       operationId: update_payment_method
       parameters:
       - in: path
@@ -2633,7 +2829,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -2642,10 +2838,10 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Update Payment Method
+      summary: Update payment method
       tags:
       - user
-  /api/v1/verify-git-sync-directories:
+  /api/v1/verify_git_sync_directories:
     get:
       description: 'If invalid, returns 400 error with ''detail'' key of how your
         repo is invalid.
