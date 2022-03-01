@@ -577,6 +577,10 @@ components:
       - subject
       title: TicketUpdate
       type: object
+    UserEmail:
+      properties: {}
+      title: UserEmail
+      type: object
     UserEmailCreate:
       properties:
         forward_to_email:
@@ -691,12 +695,169 @@ info:
     url: https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png
 openapi: 3.0.2
 paths:
+  /api/v1/account:
+    get:
+      description: Get your user data
+      operationId: get_user_me
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Your API token's user details
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get own user
+      tags:
+      - account
+      - account
+    put:
+      description: Update your user data
+      operationId: update_user
+      requestBody:
+        content:
+          application/json:
+            example:
+              address: string
+              address2: string
+              city: string
+              country: string
+              default_region_id: 1
+              full_name: string
+              password: a very strong password
+              phone_number: string
+              post_code: string
+              state: string
+              tfa: 0
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UserUpdate'
+              description: Your new plan's details
+              title: User In
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Your updated user details
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update user
+      tags:
+      - account
+      - account
+  /api/v1/account/payment-method:
+    get:
+      description: Get your payment methods
+      operationId: get_payment_methods
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON list of your payment methods
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Get payment methods
+      tags:
+      - account
+      - account
+  /api/v1/account/payment-method/{payment_method_id}:
+    delete:
+      description: Delete a non-default payment method
+      operationId: delete_payment_method
+      parameters:
+      - in: path
+        name: payment_method_id
+        required: true
+        schema:
+          title: Payment Method Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Delete payment method
+      tags:
+      - account
+      - account
+    put:
+      description: Select your default payment method to charge every billing cycle
+      operationId: update_payment_method
+      parameters:
+      - in: path
+        name: payment_method_id
+        required: true
+        schema:
+          title: Payment Method Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Update payment method
+      tags:
+      - account
+      - account
+  /api/v1/account/revoke-oauth/{provider}:
+    delete:
+      description: Revoke your Git OAuth permission
+      operationId: revoke_oauth
+      parameters:
+      - in: path
+        name: provider
+        required: true
+        schema:
+          title: Provider
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: JSON
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - OAuth2PasswordBearer: []
+      summary: Revoke OAuth
+      tags:
+      - account
+      - account
   /api/v1/domain_check:
     get:
-      description: 'Check if a domain is correctly set up for Site Bay WordPress Hosting.
-
-        Your site''s DNS records need a CNAME pointed at $CITY.sitebay.org where $CITY
-        is a valid region''s city name'
+      description: Returns success if a given FQDN's DNS records are correctly set
+        up
       operationId: domain_check
       parameters:
       - in: query
@@ -717,7 +878,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
-      summary: Domain Check
+      summary: Domain check
       tags:
       - utils
   /api/v1/migration:
@@ -795,6 +956,7 @@ paths:
       - migration
   /api/v1/plan:
     get:
+      description: Get all your active plans
       operationId: get_plans
       responses:
         '200':
@@ -812,6 +974,7 @@ paths:
       tags:
       - plan
     post:
+      description: Buy a new plan/team
       operationId: create_plan
       requestBody:
         content:
@@ -841,11 +1004,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Create Plan
+      summary: Create a Plan
       tags:
       - plan
   /api/v1/plan/{plan_id}:
     delete:
+      description: Cancel your plan, which will delete it at the end of your cycle
       operationId: delete_plan
       parameters:
       - in: path
@@ -873,6 +1037,7 @@ paths:
       tags:
       - plan
     get:
+      description: Get a plan by its UUID
       operationId: get_plan
       parameters:
       - in: path
@@ -901,6 +1066,7 @@ paths:
       tags:
       - plan
     put:
+      description: Upgrade or downgrade your plan
       operationId: update_plan
       parameters:
       - in: path
@@ -931,11 +1097,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Update Plan
+      summary: Update a Plan
       tags:
       - plan
   /api/v1/plan/{plan_id}/preview:
     get:
+      description: Preview the proration change before you upgrade or downgrade your
+        plan
       operationId: preview_change
       parameters:
       - in: path
@@ -971,11 +1139,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Preview Change
+      summary: Preview Plan
       tags:
       - plan
   /api/v1/region:
     get:
+      description: Get details of all regions
       operationId: get_regions
       responses:
         '200':
@@ -992,6 +1161,7 @@ paths:
       - region
   /api/v1/region/{region_id}:
     get:
+      description: Get details of a region by its ID
       operationId: get_region
       parameters:
       - in: path
@@ -1013,37 +1183,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
-      summary: Get Region
+      summary: Get a Region
       tags:
       - region
-  /api/v1/revoke-oauth/{provider}:
-    delete:
-      description: Revoke your Git OAuth permission
-      operationId: revoke_oauth
-      parameters:
-      - in: path
-        name: provider
-        required: true
-        schema:
-          title: Provider
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: JSON
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Revoke OAuth
-      tags:
-      - user
   /api/v1/site_live:
     get:
       description: Get details about all of your live sites
@@ -1381,9 +1523,7 @@ paths:
       - site_live
       - site_live
     put:
-      description: 'Allows a nameserver configured site to update DNS records
-
-        Domain Option: NS'
+      description: Update a DNS record on your Nameserver configured site
       operationId: update_dns_record
       parameters:
       - in: path
@@ -1435,7 +1575,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1444,7 +1584,7 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Update Dns Record
+      summary: Update DNS record
       tags:
       - site_live
       - site_live
@@ -1478,6 +1618,8 @@ paths:
       - site_live
       - site_live
     post:
+      description: Automatically add the DNS records to your Nameserver configured
+        site
       operationId: add_mail_dns
       parameters:
       - in: path
@@ -1491,7 +1633,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1500,19 +1642,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Add Mail Dns
+      summary: Create Email DNS records
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/dns/{dns_id}:
     delete:
-      description: 'Info: Allows user to delete DNS records
-
-        Returns: Template Page
-
-        Permissions: Member
-
-        Domain Option: NS'
+      description: Delete a DNS record on your Nameserver configured site
       operationId: delete_dns_record
       parameters:
       - in: path
@@ -1532,7 +1668,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -1541,7 +1677,7 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Delete Dns Record
+      summary: Delete DNS record
       tags:
       - site_live
       - site_live
@@ -1575,15 +1711,7 @@ paths:
       - site_live
       - site_live
     post:
-      description: 'Create a Site Bay custom email. You can create a forward email
-        which just forwards to another email provider, such as gmail.
-
-        You can create a managed email by leaving the "forward_to_email" param blank
-        and including a "password" param.
-
-        You can also make this a catchall by calling PATCH "/{fqdn}/email/{user_email_address}".
-
-        Your password must meet password strength requirements.'
+      description: Create a custom email account
       operationId: create_email
       parameters:
       - in: path
@@ -1601,10 +1729,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserEmailCreate'
       responses:
-        '200':
+        '201':
           content:
             application/json:
-              schema: {}
+              schema:
+                $ref: '#/components/schemas/UserEmail'
           description: Successful Response
         '422':
           content:
@@ -2061,6 +2190,7 @@ paths:
       - site_live
   /api/v1/site_live/{fqdn}/stage:
     delete:
+      description: Delete your staging site
       operationId: delete_site_stage
       parameters:
       - in: path
@@ -2074,7 +2204,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -2083,11 +2213,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Delete Site Stage
+      summary: Delete Stage Site
       tags:
       - site_live
       - site_live
     post:
+      description: Create a staging site on which you can test changes
       operationId: create_site_stage
       parameters:
       - in: path
@@ -2100,7 +2231,7 @@ paths:
         content:
           application/json:
             example:
-              restore_point: '2022-03-01T05:32:07.392605'
+              restore_point: '2022-03-01T21:21:59.663146'
               subdomain: staging
             schema:
               $ref: '#/components/schemas/SiteStageCreate'
@@ -2109,7 +2240,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: SiteStageSchema
         '422':
           content:
             application/json:
@@ -2118,12 +2249,14 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Create Site Stage
+      summary: Create a Staging site
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/stage/commit:
     post:
+      description: Sync the wp-content and database from your staging site to your
+        live site
       operationId: commit_site_stage
       parameters:
       - in: path
@@ -2137,7 +2270,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -2146,12 +2279,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Commit Site Stage
+      summary: Commit Stage Site
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/tag:
     get:
+      description: Get all the tags for your site
       operationId: get_tags
       parameters:
       - in: path
@@ -2161,7 +2295,7 @@ paths:
           title: Fqdn
           type: string
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
@@ -2178,17 +2312,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Get Tags
+      summary: Get tags
       tags:
       - site_live
       - site_live
     post:
-      description: 'Create a tag for organizational purposes
-
-
-        - **name**: each tag must have a name
-
-        '
+      description: Create a tag for organizational purposes for your site
       operationId: create_tag
       parameters:
       - in: path
@@ -2219,12 +2348,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Create Tag
+      summary: Create tag
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/tag/{tag_id}:
     delete:
+      description: Get a tag by its ID
       operationId: delete_tag
       parameters:
       - in: path
@@ -2241,10 +2371,14 @@ paths:
           title: Fqdn
           type: string
       responses:
-        '200':
+        '201':
           content:
             application/json:
-              schema: {}
+              schema:
+                items:
+                  $ref: '#/components/schemas/Tag'
+                title: Response Delete Tag Api V1 Site Live  Fqdn  Tag  Tag Id  Delete
+                type: array
           description: Successful Response
         '422':
           content:
@@ -2254,20 +2388,13 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Delete Tag
+      summary: Get a tag
       tags:
       - site_live
       - site_live
   /api/v1/site_live/{fqdn}/usage:
     get:
-      description: 'Get your site''s plan usage for a given period.
-
-
-        - **start**: The beginning of the usage period
-
-        - **end**: The end of the usage period
-
-        '
+      description: Get your visits and storage for a site at a given interval
       operationId: get_site_plan_usage
       parameters:
       - in: path
@@ -2295,7 +2422,7 @@ paths:
           content:
             application/json:
               schema: {}
-          description: Successful Response
+          description: JSON
         '422':
           content:
             application/json:
@@ -2361,6 +2488,7 @@ paths:
       - team
   /api/v1/team/{team_id}/member/{team_member_id}:
     delete:
+      description: Delete a team member
       operationId: remove_team_member
       parameters:
       - in: path
@@ -2391,11 +2519,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Remove Team Member
+      summary: Delete Team Member
       tags:
       - team
       - team
     get:
+      description: Get a Team Member by their UUID
       operationId: get_team_member
       parameters:
       - in: path
@@ -2467,6 +2596,7 @@ paths:
       - team
   /api/v1/template:
     get:
+      description: Returns a list of ready-made template sites
       operationId: get_templates
       responses:
         '200':
@@ -2482,6 +2612,7 @@ paths:
       tags:
       - template
     post:
+      description: Create a new template by uploading a wpress file
       operationId: submit_template
       requestBody:
         content:
@@ -2511,11 +2642,12 @@ paths:
           description: Validation Error
       security:
       - OAuth2PasswordBearer: []
-      summary: Submit Template
+      summary: Create Template
       tags:
       - template
   /api/v1/template/{template_name}:
     get:
+      description: Get details of a ready-made template sites by its name
       operationId: get_template
       parameters:
       - in: path
@@ -2537,7 +2669,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
-      summary: Get Template
+      summary: Get Templates
       tags:
       - template
   /api/v1/ticket:
@@ -2559,6 +2691,7 @@ paths:
       tags:
       - ticket
     post:
+      description: Create a support ticket request
       operationId: create_ticket
       requestBody:
         content:
@@ -2592,6 +2725,7 @@ paths:
       - ticket
   /api/v1/ticket/{ticket_id}:
     delete:
+      description: Delete a support ticket request by its ID
       operationId: delete_ticket
       parameters:
       - in: path
@@ -2618,6 +2752,7 @@ paths:
       tags:
       - ticket
     get:
+      description: Get a support ticket request by its ID
       operationId: get_ticket
       parameters:
       - in: path
@@ -2645,6 +2780,7 @@ paths:
       tags:
       - ticket
     put:
+      description: Update a support ticket request
       operationId: update_ticket
       parameters:
       - in: path
@@ -2679,6 +2815,7 @@ paths:
       - ticket
   /api/v1/ticket/{ticket_id}/reply:
     post:
+      description: Reply to a support ticket request
       operationId: create_ticket_reply
       parameters:
       - in: path
@@ -2716,140 +2853,9 @@ paths:
       summary: Create Ticket Reply
       tags:
       - ticket
-  /api/v1/user/me:
-    get:
-      description: Get your user data
-      operationId: get_user_me
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: Your API token's user details
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Get own user
-      tags:
-      - user
-    put:
-      description: Update your user data
-      operationId: update_user
-      requestBody:
-        content:
-          application/json:
-            example:
-              address: string
-              address2: string
-              city: string
-              country: string
-              default_region_id: 1
-              full_name: string
-              password: a very strong password
-              phone_number: string
-              post_code: string
-              state: string
-              tfa: 0
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/UserUpdate'
-              description: Your new plan's details
-              title: User In
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: Your updated user details
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Update user
-      tags:
-      - user
-  /api/v1/user/me/payment-method:
-    get:
-      description: Get your payment methods
-      operationId: get_payment_methods
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: JSON list of your payment methods
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Get payment methods
-      tags:
-      - user
-  /api/v1/user/me/payment-method/{payment_method_id}:
-    delete:
-      description: Delete a non-default payment method
-      operationId: delete_payment_method
-      parameters:
-      - in: path
-        name: payment_method_id
-        required: true
-        schema:
-          title: Payment Method Id
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: JSON
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Delete payment method
-      tags:
-      - user
-    put:
-      description: Select your default payment method to charge every billing cycle
-      operationId: update_payment_method
-      parameters:
-      - in: path
-        name: payment_method_id
-        required: true
-        schema:
-          title: Payment Method Id
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: JSON
-        '422':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-          description: Validation Error
-      security:
-      - OAuth2PasswordBearer: []
-      summary: Update payment method
-      tags:
-      - user
   /api/v1/verify_git_sync_directories:
     get:
-      description: 'If invalid, returns 400 error with ''detail'' key of how your
-        repo is invalid.
-
-        Make sure your git repo contains plugins, uploads, themes folders in the root
-        dir.
-
-        Returns JSON {"success": "true", "git_url": git_url}'
+      description: Returns success Git Repo's root folder is correctly set up
       operationId: verify_git_sync_directories
       parameters:
       - in: query
@@ -2875,3 +2881,5 @@ paths:
       summary: Verify Git Sync Directories
       tags:
       - utils
+servers:
+- url: https://my.sitebay.org
